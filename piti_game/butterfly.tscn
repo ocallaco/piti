@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://butterfly.gd" type="Script" id=1]
+[ext_resource path="res://sprites/burrfly.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "bf_flap"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 23 ]
+}
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 5, -5, 7, 5.5, -7, 5.5, -5, -5 )
+
+[node name="butterfly" type="Area2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+vframes = 5
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/bf_flap = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 19.9081, -23.8356 )
+shape = SubResource( 2 )
+[connection signal="area_entered" from="." to="." method="_on_butterfly_area_entered"]

@@ -1,0 +1,130 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://AnimationPlayer.gd" type="Script" id=2]
+[ext_resource path="res://sprites/piti_backward.png" type="Texture" id=3]
+[ext_resource path="res://piti_up.gd" type="Script" id=4]
+[ext_resource path="res://sprites/piti_forward.png" type="Texture" id=5]
+[ext_resource path="res://piti_down.gd" type="Script" id=6]
+[ext_resource path="res://sprites/piti_profile.png" type="Texture" id=7]
+[ext_resource path="res://piti_profile.gd" type="Script" id=8]
+[ext_resource path="res://sprites/piti_dance.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=5]
+resource_name = "dance"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("piti_dance:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 11 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "walk_dn"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("piti_down:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 22 ]
+}
+
+[sub_resource type="Animation" id=2]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("piti_walk:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 22 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "walk_up"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("piti_up:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 22 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 145.0
+height = 335.0
+
+[node name="Player" type="Area2D"]
+position = Vector2( 0, 1.90735e-06 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/dance = SubResource( 5 )
+anims/walk_dn = SubResource( 1 )
+anims/walk_h = SubResource( 2 )
+anims/walk_up = SubResource( 3 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="piti_up" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+vframes = 5
+hframes = 5
+frame = 11
+script = ExtResource( 4 )
+
+[node name="piti_down" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 5 )
+vframes = 5
+hframes = 5
+frame = 18
+script = ExtResource( 6 )
+
+[node name="piti_walk" type="Sprite" parent="."]
+texture = ExtResource( 7 )
+vframes = 5
+hframes = 5
+frame = 14
+script = ExtResource( 8 )
+
+[node name="piti_dance" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 9 )
+vframes = 3
+hframes = 4
+frame = 10
+
+[node name="dance_timer" type="Timer" parent="."]
+[connection signal="timeout" from="dance_timer" to="." method="_on_dance_timer_timeout"]
